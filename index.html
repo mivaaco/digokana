@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,97 +9,133 @@
  body {
   margin: 0;
   font-family: 'Space Grotesk', sans-serif;
-  background: #111;
   color: #fff;
   text-align: center;
   letter-spacing: -0.5;
   position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  /* Fully opaque flowing gradient background */
+  background: #111
 }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 60px 20px;
-    }
 
-    .top {
-      margin-bottom: 120px;
-    }
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    .top img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
+.particle {
+  position: absolute;
+  background: rgba(247, 198, 0, 0.274);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(247, 198, 0, 0.274);
+  animation: floatUp linear infinite;
+  animation-fill-mode: backwards; /* ensures hidden until start */
+}
 
-    .top span {
-      vertical-align: middle;
-      font-size: 14px;
-      color: #ccc;
-      letter-spacing: -1px;
-    }
+@keyframes floatUp {
+  0% {
+    transform: translateY(120vh) scale(0.3); /* start off-screen */
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% {
+    transform: translateY(-10vh) scale(1.2); /* exit top */
+    opacity: 0;
+  }
+}
 
-    .highlight {
-      display: inline-block;
-      background: #222222;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 14px;
-      color: #f7c600;
-      margin-bottom: 20px;
-    }
+/* Randomized particles using nth-child selectors */
+.particle:nth-child(1) { left: 5%;  width: 4px; height: 4px;  animation-duration: 12s; animation-delay: 0s; }
+.particle:nth-child(2) { left: 15%; width: 6px; height: 6px;  animation-duration: 18s; animation-delay: 2s; }
+.particle:nth-child(3) { left: 30%; width: 8px; height: 8px;  animation-duration: 20s; animation-delay: 4s; }
+.particle:nth-child(4) { left: 45%; width: 5px; height: 5px;  animation-duration: 14s; animation-delay: 1s; }
+.particle:nth-child(5) { left: 60%; width: 7px; height: 7px;  animation-duration: 16s; animation-delay: 3s; }
+.particle:nth-child(6) { left: 70%; width: 4px; height: 4px;  animation-duration: 22s; animation-delay: 5s; }
+.particle:nth-child(7) { left: 82%; width: 9px; height: 9px;  animation-duration: 19s; animation-delay: 2s; }
+.particle:nth-child(8) { left: 90%; width: 6px; height: 6px;  animation-duration: 17s; animation-delay: 4s; }
+.particle:nth-child(9) { left: 96%; width: 5px; height: 5px;  animation-duration: 21s; animation-delay: 6s; }
+.particle:nth-child(10){ left: 50%; width: 10px; height: 10px; animation-duration: 25s; animation-delay: 8s; }
 
-    h1 {
-      font-size: 40px;
-      font-weight: bold;
-      margin: 20px 0 30px;
-      letter-spacing: -1px;
-    }
+/* === Fade-in animation === */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 60px;
-    }
+.fade {
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+}
 
-    .btn {
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
+.fade-1 { animation-delay: 0.2s; }
+.fade-2 { animation-delay: 0.6s; }
+.fade-3 { animation-delay: 1s; }
+.fade-4 { animation-delay: 1.4s; }
+.fade-5 { animation-delay: 1.8s; }
 
-    .btn-dark {
-      background: #222;
-      color: #fff;
-    }
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  position: relative;
+  z-index: 1; /* above particles */
+}
 
-    .btn-dark:hover {
-      background: #333;
-    }
+.top { margin-bottom: 120px; }
+.top img {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+.top span {
+  vertical-align: middle;
+  font-size: 14px;
+  color: #ccc;
+  letter-spacing: -1px;
+}
 
-    .btn-yellow {
-      background: #f7c600;
-      color: #111;
-    }
+.highlight {
+  display: inline-block;
+  background: #222;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #f7c600;
+  margin-bottom: 20px;
+}
 
-    .btn-yellow:hover {
-      background: #e6b800;
-    }
+h1 {
+  font-size: 40px;
+  font-weight: bold;
+  margin: 20px 0 30px;
+  letter-spacing: -1px;
+}
 
-    .section {
-      margin-top: 160px;
-    }
-
-    .video {
-  margin-top: 32px;
+.buttons {
   display: flex;
   justify-content: center;
+  gap: 15px;
+  margin-bottom: 60px;
 }
+.btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+.btn-dark { background: #222; color: #fff; }
+.btn-dark:hover { background: #333; }
+.btn-yellow { background: #f7c600; color: #111; }
+.btn-yellow:hover { background: #f8ce27; }
 
+.section { margin-top: 160px; }
+.video { margin-top: 32px; display: flex; justify-content: center; }
 .video iframe {
   width: 100%;
   max-width: 720px;
@@ -112,7 +147,6 @@
     0 0 32px 8px rgba(247,198,0,0.18),
     0 0 80px 0 rgba(247,198,0,0.10);
   transition: box-shadow 0.6s cubic-bezier(.4,0,.2,1);
-  /* Optional: subtle animation for glow */
   animation: video-glow 4s ease-in-out infinite alternate;
 }
 
@@ -124,38 +158,53 @@
   }
   70% {
     box-shadow:
-      0 0 48px 16px rgba(247, 198, 0, 0.062),
+      0 0 48px 16px rgba(247,198,0,0.062),
       0 0 120px 0 rgba(247,198,0,0.18);
   }
 }
   </style>
 </head>
 <body>
+  <!-- Particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
   <div class="container">
     <!-- Topo -->
-    <div class="top">
-      <img src="foto.png" alt="Foto">
+    <div class="top fade fade-1">
+      <img src="src/foto.png" alt="Foto">
       <span>Rodrigo Kanashiro | @digokana</span>
     </div>
 
     <!-- Destaque -->
-    <div class="highlight">💰 +R$1.9M faturados como afiliado na Europa</div>
+    <div class="highlight fade fade-2">💰 +R$1.9M faturados como afiliado na Europa</div>
 
     <!-- Headline -->
-    <h1>A jornada no digital me levou até a Europa. Quer vir também?</h1>
+    <h1 class="fade fade-3">A jornada no digital me levou até a Europa. Quer vir também?</h1>
 
     <!-- Botões -->
-    <div class="buttons">
+    <div class="buttons fade fade-4">
       <a href="https://chat.whatsapp.com/KKWLw9ZORNmCAhZjluYSPB" target="_blank" class="btn btn-dark">Grupo Afiliados JP</a>
       <a href="https://chat.whatsapp.com/LuLxhfD96OC6dkwXug15pA" target="_blank" class="btn btn-yellow">Mentoria EuroAds</a>
     </div>
 
     <!-- Podcast -->
-    <div class="section">
+    <div class="section fade fade-5">
       <h2>Assista minha entrevista no podcast POD FICAR RICO</h2>
       <div class="video">
         <iframe src="https://www.youtube.com/embed/Ccf_BeVrWx0" title="YouTube video player" allowfullscreen></iframe>
       </div>
+    </div>
+  </div>
 </body>
 </html>
-
